@@ -15,16 +15,41 @@ def approval():
     op_reveal = Bytes("reveal")
 
     @Subroutine(TealType.none)
-    def reset(): 
+    def reset(account: Expr): 
         return Seq(
-            App.localPut(Int(0),local_opponent, Bytes(""))
+            App.localPut(account,local_wager, Int(0)),
+            App.localPut(account,local_commitment, Bytes("")),
+            App.localPut(account,local_reveal, Bytes("")), 
+            App.localPut(account,local_opponent, Bytes("")), 
+
         )
+
+    @Subroutine(TealType.none)
+    def create_challenge(): 
+        return Reject() 
+
+    @Subroutine(TealType.none)
+    def accept_challenge(): 
+        return Reject() 
+
+    @Subroutine(TealType.none)
+    def reveal(): 
+        return Reject() 
+
 
     return program.event(
         init = Approve(),
         opt_in=Seq(
-            reset(),
+            reset(Int(0)),
             Approve()
+        ),
+        no_op=Seq(
+            Cond(
+                [Txn.application_args[0] == op_challenge, create_challenge()],
+                [Txn.application_args[0] == op_accept, accept_challenge()], 
+                [Txn.application_args[0] == op_reveal, reveal()]
+            ),
+            Reject() 
         )
     )
 
