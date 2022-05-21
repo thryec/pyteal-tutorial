@@ -15,7 +15,7 @@
    ```
 5. Install Python virtual environment in project folder:
    ```txt
-   $ python -m venv venv
+   $ python3 -m venv venv
    $ source ./venv/Scripts/activate # Windows
    $ source ./venv/bin/activate # Linux
    ```
@@ -30,7 +30,7 @@
 
 Youtube: https://www.youtube.com/watch?v=w1eYtAR5brY
 
-## Algod Commands
+## Counter Contract
 
 ```
 // Deploy Contract
@@ -46,4 +46,11 @@ goal app call --app-id 7 --from $ONE --app-arg "str:dec"
 // Read Contract Storage
 goal app read --global --app-id 1 --guess-format
 
+```
+
+## Rock Paper Scissors Contract
+
+```
+// Deploy Contract
+goal app create --creator $ONE --approval-prog /data/build/approval.teal --clear-prog /data/build/clear.teal --global-byteslices 0 --global-ints 0 --local-byteslices 3 --local-ints 1
 ```
