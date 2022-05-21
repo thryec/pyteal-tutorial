@@ -30,6 +30,12 @@
 
 Youtube: https://www.youtube.com/watch?v=w1eYtAR5brY
 
+### Compile
+
+```
+./build.sh contracts.rps.step_01
+```
+
 ## Counter Contract
 
 ```
